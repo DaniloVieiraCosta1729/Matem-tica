@@ -7,6 +7,7 @@
 \usepackage{sectsty} % Formatação de títulos de seção
 \usepackage{graphicx} % Suporte para inclusão de figuras
 \usepackage{amsmath} % Pacote para equações matemáticas
+\usepackage{amsfonts}
 
 % Configurações adicionais
 \renewcommand{\familydefault}{\rmdefault} % Definir a fonte padrão como Times New Roman
@@ -22,10 +23,27 @@
 \maketitle
 
 \begin{abstract}
-Pretendo agrupar nesse repositório a maioria dos exercícios de C\# que eu fizer durante meus estudos. 
+Vamos definir o que é um espaço vetorial, deduzir alguns fatos básicos e explorar alguns exemplos.
 \end{abstract}
 
-\section{Assuntos}
-
-
+\section{Espaço Vetorial (ou Linear)}
+Dizemos que um conjunto E é um espaço vetorial e chamamos os seus elementos de vetores se esse conjunto está munido de duas operações, $\cdot$ e $+$ de modo que essas operações possuam algumas propriedades específicas que vamos ver a seguir, porém, vamos antes definir o domínio e contra-domínio dessas operações.
+$$
+\begin{matrix}
+    \cdot : \mathbb{R} \times E\longrightarrow E \\
+    \left( \alpha , u\right) \longmapsto v
+\end{matrix}
+$$
+$$
+\begin{matrix}
+    +: E \times E \longrightarrow E \\\left(u,v\right) \longmapsto w
+\end{matrix}  
+$$
+A forma como definimos essas operações já garantem o fechamento de $E$ com relação a essas operações.
+As propriedades que essas operações devem possuir para que $E$ seja um espaço vetorial são:\\
+Para todo $u$, $v$, $w \in E$ e  $\alpha$ e $\beta \in \mathbb{R}$
+\begin{itemize}
+    \item Comutatividade da soma: $u+v=v+u$;
+    \item Associatividade da soma e produto: $u+\left(v+w\right)=\left(u+v\right)+w$ e $\left(\alpha \beta \right)u=\alpha\left(\beta u\right)$;
+\end{itemize}
 \end{document}
