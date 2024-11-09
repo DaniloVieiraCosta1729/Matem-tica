@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isomorfismo entre números e matrizes</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        .content-box {
+            margin: 20px; /* Múltiplo de 10px */
+            padding: 20px; /* Mantendo o preenchimento consistente */
+        }
+    </style>
+
+</head>
+<body>
+    <div class="my-3 mx-auto p-3" style="max-width: 1500px; margin: 2rem;">
+        <h1>Contexto</h1>
+        <p>Eu estava procurando um livro de álgebra linear pra substituir um livro que eu tentei usar várias vezes, mas nunca passei do capítulo 4 dele. Dai eu encontrei um livro chamado "Finite-Dimensional Vector Spaces" de um cara que é bem famoso na área, chamado Paul R. Halmos.</p>
+        <img src="Explicacao/Sem título.png" alt="imagem do livro" style="width: 200px;" class="d-block mx-auto content-box">
+        <p>Procurando a foto dele agora, acabei achando essa citação dele que tem tudo a haver com o que aconteceu.</p>
+        <img src="Explicacao/quote-the-only-way-to-learn-mathematics-is-to-do-mathematics-paul-halmos-60-1-0142.png" alt="Paul Halmos - citação" style="width: 500px;" class="d-block mx-auto content-box">
+
+        <p>No livro, ele explica que incluiu exercícios que são declarativos e que para esses exercícios o leitor tem que descobrir se a afirmação é verdade ou não e então formular uma explicação que comprove a descoberta. Também precisa considerar casos não citados, pra descobrir quando e onde é que aquele afirmação funcionaria, se é que funciona em algum caso.</p>
+
+        <img src="Explicacao/exercicios halmos.png" alt="trecho do prefacio do livro" class="d-block mx-auto content-box" style="width: 500px;">
+
+        <p>Todas as ideias surgiram enquanto eu pensava sobre um exercício desse livro do Halmos. O exercício é esse:</p>
+        <img src="Explicacao/exercicioQ.png" alt="exercício em questão" class="d-block mx-auto content-box">
+
+        <p>Como disse na mensagem, uma das coisas que me impactaram foi a reunião simultanea de várias coisas que vi nos últimos anos. Se eu não tivesse visto qualquer uma delas, ou se alguma delas não tivesse me marcado ao ponto de eu lembrar dela, certamente não teria seguido o exercício do livro até esse ponto.</p>
+        <h1>O que descobri</h1>
+        <!-- Início do código Latex -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?' type='text/javascript'>
+        MathJax.Hub.Config({
+            HTML: ["input/TeX","output/HTML-CSS"],
+            TeX: { extensions: ["AMSmath.js","AMSsymbols.js"],
+                   equationNumbers: { autoNumber: "AMS" } },
+            extensions: ["tex2jax.js"],
+            jax: ["input/TeX","output/HTML-CSS"],
+            tex2jax: { inlineMath: [ ['$','$'], ["\(","\)"] ],
+                       displayMath: [ ['$$','$$'], ["\[","\]"] ],
+                       processEscapes: true },
+            "HTML-CSS": { availableFonts: ["TeX"],
+                          linebreaks: { automatic: true } }
+        });
+        </script>
+        <!-- Fim do código Latex -->
+        
+        <h4>Números complexos</h4>
+        <p>Há pouco tempo atrás eu vi esse vídeo abaixo que mostra como construir os números complexos completamente a partir dos reais, sem precisar definir a unidade imaginário como $i^{2} = -1$.</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/mEBRdWlCXYM?si=e3AN8TCTleHJ38Xn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="d-block mx-auto content-box"></iframe>
+        <p>Para entender isso, vamos escrever a formulação mais comum dos números complexos. Normalmente, definimos os complexos como o conjunto $\mathbb{C} =\{ a+bi $ $ ; $ $a, b \in\mathbb{R}\}$.</p>
+        <p>O vídeo começa mostrando o que é que a unidade imaginária faz quando a gente múltiplica um número por ela. Por exemplo, se a gente multiplicar $1$ por $i$ temos $i$, ou seja, é como se o $i$ rotacionasse o número, que nesse exemplo é o 1, no plano de Argand-Gauss. Isso vale para qualquer número, se multiplicar o número $z = a+bi$ por $i$ temos $(a+bi)\cdot i=-b+ai$ que se representarmos como um ponto no plano veremos que é o ponto $(-b, a)$ que se trata justamente do ponto para o qual a rotação de $(a,b)$ em 90° no sentido anti-horário aponta. Essa identificação rápida de uma rotação em 90° no plano olhando apenas para as coordenadas eu tinha visto no livro de geometria analítica do Elon Lages Lima, mesmo autor do livro que eu "larguei" para ler o livro do Halmos.</p>
+        <p>
+            Essa propriedade de rotacionar coisas no plano nós faz pensar em transformações lineares. Particularmente, a transformação linear que rotaciona um vetor $v$ em um ângulo $\theta$ no sentido anti-horário é $$R(\theta)=\begin{pmatrix} \cos(\theta) & -\sin(\theta) \\ \sin(\theta) & \cos(\theta)  \end{pmatrix} $$ ou seja, é como se $$i = R\left(\frac{\pi}{2}\right)=\begin{pmatrix} \cos(\frac{\pi}{2}) & -\sin(\frac{\pi}{2}) \\ \sin(\frac{\pi}{2}) & \cos(\frac{\pi}{2})  \end{pmatrix}=\begin{pmatrix} 0 & -1 \\ 1 & 0  \end{pmatrix}$$
+            Assim, se o número $z=a+bi$ for escrito como um vetor $\overrightarrow{z} = \begin{pmatrix} a \\ b \end{pmatrix}$ quando multiplicamos ele por $i=\begin{pmatrix} 0 & -1 \\ 1 & 0  \end{pmatrix}$ temos 
+            $$\begin{pmatrix} 0 & -1 \\ 1 & 0  \end{pmatrix} \cdot \begin{pmatrix} a \\ b \end{pmatrix} =\begin{pmatrix} -b \\ a \end{pmatrix}$$
+        </p>
+        <p>O gif abaixo foi o melhor que eu achei para mostrar o número rotacionando, mas ele não está tratando extamente disso que a gente tá falando aqui, é somento uma animação que mostra o que está acontecendo. Pelo menos vai servir pra você entender o que eu quero dizer quando eu falo "rotacionar", é só ignorar o texto.</p>
+        <img src="Explicacao/UQB_to.gif" alt="rotacao do vetor" class="d-block mx-auto content-box">
+        <img src="Explicacao/transf.png" alt="transformacao" class="d-block mx-auto content-box" style="width: 800px;">
+        <h4>O conjunto $\mathbb{Q}(\sqrt{2})$</h4>
+        <p>O conjunto $\mathbb{Q}(\sqrt{2})$ foi definido no livro como {$\alpha + \beta \sqrt{2} $ $; $ $\alpha, $ $ \beta \in \mathbb{Q} $}. Essa definição é extremamente parecida com a dos números complexos.</p>
+        <p>Basicamente, um elemento $q$ de $\mathbb{Q}(\sqrt{2})$ é dado por um par de números racionais $\alpha, $ $ \beta \in \mathbb{Q}$ com um número irracional $\sqrt{2}$. Enquanto que os números complexos são dados por um par de números reais $\alpha, $ $ \beta \in \mathbb{R}$ com um número imaginário $i$.</p>
+
+        <p>Essa semelhança me instigou a construir uma representação bidimensional dos elementos de $\mathbb{Q}(\sqrt{2})$ e explorar as várias propriedades deles como módulo, conjugado, inverso multiplicativo etc. Basicamente eu resolvi o exercício e depois do exercício e das propriedades eu me perguntei se o $\sqrt{2}$, assim como o $i$, poderia estar relacionado com alguma transformação linear. Essa ideia de relacionar o $\sqrt{2}$ com uma transformação foi muito empolgante pra mim.</p>
+        <p>Eu comecei pensando e respeito no ônibus e cheguei na conclusão errada kk, eu achei que a cada vez que eu multiplicasse um número $q \in \mathbb{Q}(\sqrt{2})$, por exemplo, $q = \alpha + \beta \sqrt{2} = \begin{pmatrix}\alpha \\ \beta \end{pmatrix}$ por $\sqrt{2}$ teriamos, assim como em $\mathbb{C}$, uma rotação de 90°, porém com uma das coordenadas esticada em 2 unidades. Pensei isso porque se nós multiplicarmos teremos o seguinte: $$ q\cdot \sqrt{2}=(\alpha + \beta \sqrt{2})\cdot \sqrt{2}=2\beta +\alpha \sqrt{2} = \begin{pmatrix}2\beta \\ \alpha \end{pmatrix} $$ Como as coordenadas foram trocadas eu pensei na hora que tinha acontecido algo parecido com os complexos e acabei não percebendo que a coordenada x está positiva e que uma rotação de $90°$ é impossível, porque apenas um dos eixos esticou. Fiquei feliz pra caramba e na hora do almoço eu fui anotar isso tudo no papel e foi aí que eu vi o erro na minha interpretação geométrica.</p>
+        
+        <p>Nesse ponto eu desenhei tudo o que estava pensando e percebi, mesmo que apenas de modo intuitivo, que o $\sqrt{2}$ realmente pode ser visto como uma transformação linear, mas a transformação não girava o número mais sim o próprio espaço! É como se o $\sqrt{2}$ virasse o plano de cabeça para baixo e depois ainda esticasse o eixo y - eixo esse que agora estava na posição do x - em duas unidades, isto é, de modo que o comprimento em y se torne duas vezes maior do que estava antes de multiplicar por $\sqrt{2}$. </p>
+
+        <p>A interpretação disso está no desenho abaixo: </p>
+        <img src="Explicacao/raiz de 2.png" alt="aplicacao de raiz de 2 sobre q." class="d-block mx-auto content-box" style="width: 800px;">
+        <p>Se mantermos os eixos fixos e olharmos apenas para o vetor, a gente vai ver isso para cada vez que aplicarmos $\sqrt{2}$ ao número $q$:</p>
+        <img src="Explicacao/aplicacoes sucessivas de raiz de 2.png" alt="aplicacoes sucessivas de raiz de 2" class="d-block mx-auto content-box" style="width: 800px;">
+        <p>Essa outra visualização nos mostra que todos os valores de $q\cdot \left(\sqrt{2}\right)^{k}$ para $k \in \mathbb{N}$ são pontos da interseção de uma inspiral sobre a superfície de um cone que tem como eixo a bissetriz dos quadrantes ímpares com o plano $xy$.</p>
+
+        <img src="Explicacao/cone.png" alt="cone" class="d-block mx-auto content-box" style="width: 500;">
+
+        <p>Eu não sei que inspiral é essa e só percebi isso agora enquanto estou escrevendo isso. Vou tentar descobrir depois.</p> 
+
+        <p>Agora que temos a visualização e a intuição do que acontece, precisamos saber que transformação é essa que faz isso que o $\sqrt{2}$ faz. No almoço, eu tive dificuldade pra descobrir que transformação é, porque eu não lembrava bem de como fazer isso, mas lembrava desse vídeo do 3blue1brown em que ele explora essa tradução entre transformação e a matrizes.</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/kYB8IZa5AuE?si=UfuhdD2aJntMtDxl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="d-block mx-auto content-box"></iframe>
+
+        <p>Nesse vídeo percebi uma propriedade bem óbvia das transformações que deriva diretamente da definição de uma trnasformação linear.</p>
+        <p>Uma transformação linear é uma aplicação $T:E_{a} \rightarrow E_{b}$ tal que, para todo $v$ e $u \in E_{a}$ e $\alpha$ escalar, temos $$T(u+v)=T(u)+T(v)$$ $$ T(\alpha \cdot v) = \alpha \cdot T(v)$$</p>
+
+        <p>Isso significa que para compreender 100% uma transformação precisamos apenar saber o que essa transformação faz com os vetores da base do espaço vetorial $E_{a}$. No nosso caso, vamos considerar $E_{a} = \mathbb{R}^{2}$. Vamos pensar em onde vão parar os vetores da base de $\mathbb{R}^{2}$ quando a gente aplicar a transformação...</p>
+        <p>Vamos começar com o vetor $î=\begin{pmatrix}1 \\ 0\end{pmatrix}$. Esse vetor escrito na forma como o conjunto $\mathbb{Q}(\sqrt{2})$ foi definido fica:$$ î = 1+0\cdot \sqrt{2}=1 $$ agora vamos multiplicar por $\sqrt{2}$: $$ 1\cdot \sqrt{2}=\sqrt{2} = 0 + 1\cdot \sqrt{2} = \begin{pmatrix} 0 \\ 1\end{pmatrix} $$ Pronto, descobrimos que $\sqrt{2} \cdot î = \begin{pmatrix} 0 \\ 1\end{pmatrix}$</p>
+        <p>Vamos ver o ele faz com o segundo vetor da base, $\hat{j} = \begin{pmatrix} 0 \\ 1\end{pmatrix} $, para isso vamos escrever $\hat{j}$ na forma algebrica: $$ \hat{j} = 0+1\cdot \sqrt{2}$$Portanto, $$ \hat{j}\cdot \sqrt{2} =0\cdot\sqrt{2} + \sqrt{2} \cdot \sqrt{2}=2=\begin{pmatrix} 2 \\ 0\end{pmatrix}$$</p>
+        <p>Pronto, agora sabemos que se pegarmos um vetor $v \in \mathbb{R}^{2}$, $v=\begin{pmatrix} a \\ b\end{pmatrix}=a\cdot î+b\cdot \hat{j}$, então, ao aplicarmos a transformação que queremos descobrir, devemos ter como resultado: $$ G(v)=G(a\cdot î+b\cdot \hat{j}) = G(a\cdot î)+G(b\cdot\hat{j})=a\cdot G(î)+b\cdot G(\hat{j})$$ $$ G(v)= a\cdot \begin{pmatrix} 0 \\ 1\end{pmatrix} + b\cdot \begin{pmatrix} 2 \\ 0\end{pmatrix}=\begin{pmatrix} 0 & 2 \\ 1 & 0\end{pmatrix} \cdot \begin{pmatrix} a \\ b\end{pmatrix}$$</p>
+
+        <p>Pronto! finalmente concluí o que eu queria. Encontrei a transformação que está intimamente ligada ao raiz de 2 dentro do conjunto $\mathbb{Q}(\sqrt{2})$</p>
+
+        <p>Com isso, agora somos capazes de representar os elementos de $\mathbb{Q}(\sqrt{2})$ de forma matricial. A demonstração do isomorfismo entre essas representações ainda é necessária, mas não deve ser difícil, só demorada mesmo, então n vou fazer nesse texto.</p>
+
+        <h4>Representação de $\mathbb{Q}(\sqrt{2})$ em forma matricial</h4>
+
+        <p>Associamos a unidade das abscissas a matriz unitária e a unidade das ordenadas a matriz que representa o $\sqrt{2}.$ $$ 1 \rightarrow \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix} $$ e $$ \sqrt{2} \rightarrow \begin{pmatrix} 0 & 2 \\ 1 & 0 \end{pmatrix}$$ Assim, $$ q = a + b\cdot \sqrt{2}= a \cdot \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix} + b \cdot \begin{pmatrix} 0 & 2 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} a & 2b \\ b & a \end{pmatrix}$$</p>
+        <h4>Generalização</h4>
+        <p>Essa forma matricial dos números de $\mathbb{Q}(\sqrt{2})$ é curiosamente semelhante a forma matricial dos números complexos. Vou escrever forma matricial dos complexos para compararmos. $$ 1 \rightarrow \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix} $$ $$ i \rightarrow \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} $$</p>
+        <p>$$ z = a + bi= a \cdot \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix} + b \cdot \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} a & -b \\ b & a \end{pmatrix}$$</p>
+        <p>Agora perceba que o seguinte padrão parece estar presente aqui: em ambos os casos o elemento que multiplica o b na primeira linha é igual ao quadrado do número "especial". $$\begin{pmatrix} a & 2b \\ b & a \end{pmatrix} =\begin{pmatrix} a & (\sqrt{2})^{2}b \\ b & a \end{pmatrix}$$ e $$\begin{pmatrix} a & -b \\ b & a \end{pmatrix}= \begin{pmatrix} a & i^{2}b \\ b & a \end{pmatrix}$$</p>
+        <p>Isso sugere que, se $\eta = \xi^{2}$ então, um conjunto que é definido por $n=a+b\cdot \xi$ é equivalente a um com elementos escritos como $$n = \begin{pmatrix} a & \eta \cdot b \\ b & a \end{pmatrix}$$</p>
+        <p>Não provei, mas é uma conjectura que parece fazer sentido, porque é muita coincidência se não for verdade. </p>
+
+        <p>Concluo com a interpretação geométrica de $\begin{pmatrix} a & \eta \cdot b \\ b & a \end{pmatrix}$. Essa transformação leva o vetor $\begin{pmatrix} 1 \\ 0 \end{pmatrix}$ ao ponto $\begin{pmatrix} a \\ b \end{pmatrix}$ e o vetor $\begin{pmatrix} 0 \\ 1 \end{pmatrix}$ ao ponto $\begin{pmatrix} \eta \cdot b \\ a \end{pmatrix}$.</p>
+        <h1>Conclusão</h1>
+        <p>Cabou.</p>
+
+        <div style="height: 200px;"></div>
+    </div>
+</body>
+</html>
